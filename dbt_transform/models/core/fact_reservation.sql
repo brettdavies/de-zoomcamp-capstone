@@ -1,4 +1,12 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized="table",
+    cluster_by = ["startDatetime", "agency", "recAreaName", "facilityName"],
+    partition_by={
+      "field": "startDatetime",
+      "data_type": "timestamp",
+      "granularity": "day"
+    },
+)}}
 
 WITH reservation AS (
     SELECT *
@@ -52,7 +60,7 @@ FROM reservation AS r
     LEFT JOIN recArea AS ra
         ON f.parentRecAreaID = ra.recAreaID
 
--- dbt build --m stg_reservations.sql --var 'is_test_run: false'
+-- dbt build --m fact_reservation.sql --var 'is_test_run: false'
 {% if var('is_test_run', default=true) %}
 
 LIMIT 100000

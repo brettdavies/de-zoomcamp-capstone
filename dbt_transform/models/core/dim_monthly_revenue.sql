@@ -1,5 +1,12 @@
-{{ config(materialized='table') }}
-
+{{ config(
+    materialized="table",
+    cluster_by = ["agency", "recAreaState", "recAreaName", "facilityName"],
+    partition_by={
+      "field": "revenue_month",
+      "data_type": "timestamp",
+      "granularity": "month"
+    },
+)}}
 WITH reservation_data AS (
     SELECT * FROM {{ ref('fact_reservation') }}
     WHERE facilityState IS NOT NULL
