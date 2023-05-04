@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"remote.SSH.defaultForwardedPorts": [
+            {
+				"localPort": 4200,
+				"remotePort": 4200,
+				"name": "prefect_orion"
+			}
+		]
+	}
+}
