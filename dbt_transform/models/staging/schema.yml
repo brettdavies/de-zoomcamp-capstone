@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: staging
+    database: de-capstone
+    schema: gcs_raw
+    
+    tables:
+      - name: Reservations
+      - name: Facilities
+      - name: RecAreas
+      - name: RecAreaAddresses
+
+models:
+    - name: stg_reservation
+      description: "Test"
+      columns:
+          - name: historicalreservationid
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+    - name: stg_facility
+      description: "Test"
+      columns:
+          - name: facilityId
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+    - name: stg_recreationArea
+      description: "Test"
+      columns:
+          - name: recAreaID
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
