@@ -11,7 +11,7 @@ def extract_from_gcs(path: str) -> pd.DataFrame:
     """Download trip data from GCS"""
     print(f"GCS: {path}")
     gcs_path = f"{path}"
-    gcs_block = GcsBucket.load("gcs-decap")
+    gcs_block = GcsBucket.load("gcs-bucket")
     gcs_block.get_directory(from_path=gcs_path, local_path=f"")
 
     gcs_path = Path(f"{gcs_path}")
@@ -30,18 +30,18 @@ def extract_from_local(path: str) -> pd.DataFrame:
 @task(log_prints=True)
 def write_bq(df: pd.DataFrame, year: int, file: str) -> None:
     """Write DataFrame to BiqQuery"""
-    gcp_credentials_block = GcpCredentials.load("gcp-decap")
+    gcp_credentials_block = GcpCredentials.load("gcp-cred")
     table_name=file.replace('data/ridb/parquet/','').replace('','').replace('.parquet','')
     print(f"\ndataset: {table_name}")
 
     if year==0:
-        table_name=f"de-capstone.gcs_raw.{table_name}"
+        table_name=f"decap-cli.gcs_raw.{table_name}"
     else:
-        table_name="de-capstone.gcs_raw.Reservations"
+        table_name="decap-cli.gcs_raw.Reservations"
     
     df.to_gbq(
         destination_table=table_name,
-        project_id="de-capstone",
+        project_id="decap-cli",
         credentials=gcp_credentials_block.get_credentials_from_service_account(),
         chunksize=500_000,
         if_exists="append"
@@ -66,35 +66,41 @@ def etl_parent_flow(year: int, path: str):
     etl_gcs_to_bq(year, path)
 
 if __name__ == "__main__":
-    # set local file path
+    # Set local file path
     local_path = "data/ridb/parquet"
 
     ridbfiles = []
-    ridbfiles.append(f"{local_path}/Activities.parquet"),
-    ridbfiles.append(f"{local_path}/CampsiteAttributes.parquet"),
-    ridbfiles.append(f"{local_path}/Campsites.parquet"),
-    ridbfiles.append(f"{local_path}/EntityActivities.parquet"),
-    ridbfiles.append(f"{local_path}/Events.parquet"),
+    # These files are required. Leave them uncommented.
     ridbfiles.append(f"{local_path}/Facilities.parquet"),
-    ridbfiles.append(f"{local_path}/FacilityAddresses.parquet"),
-    ridbfiles.append(f"{local_path}/Links.parquet"),
-    ridbfiles.append(f"{local_path}/Media.parquet"),
-    ridbfiles.append(f"{local_path}/MemberTours.parquet"),
-    ridbfiles.append(f"{local_path}/OrgEntities.parquet"),
-    ridbfiles.append(f"{local_path}/Organizations.parquet"),
-    ridbfiles.append(f"{local_path}/PermitEntranceAttributes.parquet"),
-    ridbfiles.append(f"{local_path}/PermitEntranceZones.parquet"),
-    ridbfiles.append(f"{local_path}/PermitEntrances.parquet"),
-    ridbfiles.append(f"{local_path}/PermittedEquipment.parquet"),
-    ridbfiles.append(f"{local_path}/RecAreaAddresses.parquet"),
-    ridbfiles.append(f"{local_path}/RecAreaFacilities.parquet"),
     ridbfiles.append(f"{local_path}/RecAreas.parquet"),
-    ridbfiles.append(f"{local_path}/TourAttributes.parquet"),
-    ridbfiles.append(f"{local_path}/Tours.parquet")
+    ridbfiles.append(f"{local_path}/RecAreaAddresses.parquet")
+
+    # Uncomment rows below as needed. Ensure final line is without a trailing comma.
+    # ridbfiles.append(f"{local_path}/Activities.parquet"),
+    # ridbfiles.append(f"{local_path}/CampsiteAttributes.parquet"),
+    # ridbfiles.append(f"{local_path}/Campsites.parquet"),
+    # ridbfiles.append(f"{local_path}/EntityActivities.parquet"),
+    # ridbfiles.append(f"{local_path}/Events.parquet"),
+    # ridbfiles.append(f"{local_path}/FacilityAddresses.parquet"),
+    # ridbfiles.append(f"{local_path}/Links.parquet"),
+    # ridbfiles.append(f"{local_path}/Media.parquet"),
+    # ridbfiles.append(f"{local_path}/MemberTours.parquet"),
+    # ridbfiles.append(f"{local_path}/OrgEntities.parquet"),
+    # ridbfiles.append(f"{local_path}/Organizations.parquet"),
+    # ridbfiles.append(f"{local_path}/PermitEntranceAttributes.parquet"),
+    # ridbfiles.append(f"{local_path}/PermitEntranceZones.parquet"),
+    # ridbfiles.append(f"{local_path}/PermitEntrances.parquet"),
+    # ridbfiles.append(f"{local_path}/PermittedEquipment.parquet"),
+    # ridbfiles.append(f"{local_path}/RecAreaFacilities.parquet"),
+    # ridbfiles.append(f"{local_path}/TourAttributes.parquet"),
+    # ridbfiles.append(f"{local_path}/Tours.parquet")
 
     for path in ridbfiles:
         etl_parent_flow(0, path)
 
-    for year in range(4):
-        etl_parent_flow(year+2019, f"{local_path}/{year+2019}.parquet")
+
+    # Only one of the two flow entry points below should be active at one time. Ensure one is commented out.
+    etl_parent_flow(2022, f"{local_path}/{2022}.parquet") # enable this line to only process reservations from 2022
+    # for year in range(4): # Enable this line (1/2) to only process all reservations
+    #     etl_parent_flow(year+2019, f"{local_path}/{year+2019}.parquet") # Enable this line (2/2) to only process all reservations
 

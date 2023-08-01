@@ -49,32 +49,6 @@ def fetch(url: str, year: int, file_name: str) -> pd.DataFrame:
             "equipmentdescription": "string",
             "equipmentlength": "string"
         })
-    elif file_name=="CampsiteAttributes_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "AttributeID": "int64",
-            "AttributeName": "string",
-            "AttributeValue": "string",
-            "EntityID": "string",
-            "EntityType": "string"
-        })
-    elif file_name=="Media_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "MediaID": "string",
-            "MediaType": "string",
-            "EntityID": "string",
-            "EntityType": "string",
-            "Title": "string",
-            "Subtitle": "string",
-            "Description": "string",
-            "EmbedCode": "string",
-            "Height": "int64",
-            "Width": "int64",
-            "URL": "string",
-            "Credits": "string",
-            "IsPrimary": "bool",
-            "IsPreview": "bool",
-            "IsGallery": "bool"
-        })
     elif file_name=="Facilities_API_v1.csv":
         df = pd.read_csv(url).astype({
             "FacilityID": "string",
@@ -100,58 +74,6 @@ def fetch(url: str, year: int, file_name: str) -> pd.DataFrame:
             "Enabled": "bool",
             "LastUpdatedDate": "datetime64[ns]"
         })
-    elif file_name=="Campsites_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "CampsiteID": "int64",
-            "FacilityID": "string",
-            "CampsiteName": "string",
-            "CampsiteType": "string",
-            "TypeOfUse": "string",
-            "Loop": "string",
-            "CampsiteAccessible": "bool",
-            "CampsiteLongitude": "float64",
-            "CampsiteLatitude": "float64",
-            "CreatedDate": "datetime64[ns]",
-            "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="PermitEntrances_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "PermitEntranceID": "int64",
-            "PermitEntranceType": "string",
-            "FacilityID": "string",
-            "PermitEntranceName": "string",
-            "PermitEntranceDescription": "string",
-            "District": "string",
-            "Town": "string",
-            "PermitEntranceAccessible": "bool",
-            "Longitude": "float64",
-            "Latitude": "float64",
-            "CreatedDate": "datetime64[ns]",
-            "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="Links_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "LinkID": "string",
-            "LinkType": "string",
-            "EntityID": "string",
-            "EntityType": "string",
-            "Title": "string",
-            "Description": "string",
-            "URL": "string"
-        })
-    elif file_name=="Activities_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "ActivityID": "int64",
-            "ActivityParentID": "int64",
-            "ActivityName": "string",
-            "ActivityLevel": "int64"
-        })
-    elif file_name=="OrgEntities_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "EntityID": "string",
-            "OrgID": "int64",
-            "EntityType": "string"
-        })
     elif file_name=="RecAreas_API_v1.csv":
         df = pd.read_csv(url).astype({
             "RecAreaID": "string",
@@ -173,101 +95,6 @@ def fetch(url: str, year: int, file_name: str) -> pd.DataFrame:
             "Enabled": "bool",
             "LastUpdatedDate": "datetime64[ns]"
         })
-    elif file_name=="FacilityAddresses_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "FacilityAddressID": "string",
-            "FacilityID": "string",
-            "FacilityAddressType": "string",
-            "FacilityStreetAddress1": "string",
-            "FacilityStreetAddress2": "string",
-            "FacilityStreetAddress3": "string",
-            "City": "string",
-            "AddressStateCode": "string",
-            "PostalCode": "string",
-            "AddressCountryCode": "string",
-            "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="Tours_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "TourID": "int64",
-            "FacilityID": "string",
-            "TourName": "string",
-            "TourType": "string",
-            "TourDescription": "string",
-            "TourDuration": "int64",
-            "TourAccessible": "bool",
-            "CreatedDate": "datetime64[ns]",
-            "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="Organizations_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "OrgID": "int64",
-            "OrgType": "string",
-            "OrgName": "string",
-            "OrgImageURL": "string",
-            "OrgURLText": "string",
-            "OrgURLAddress": "string",
-            "OrgAbbrevName": "string",
-            "OrgJurisdictionType": "string",
-            "OrgParentID": "int64",
-            "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="Events_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "EventID": "int64",
-            "EntityID": "string",
-            "EntityType": "string",
-            "EventName": "string",
-            "Description": "string",
-            "EventTypeDescription": "string",
-            "EventFeeDescription": "string",
-            "EventFrequencyDescription": "string",
-            "EventScopeDescription": "string",
-            "EventAgeGroup": "bool",
-            "EventRegistrationRequired": "string",
-            "EventADAAccess": "string",
-            "EventComments": "string",
-            "EventEmail": "string",
-            "EventURLAddress": "string",
-            "EventURLText": "string",
-            "EventStartDate": "string",
-            "EventEndDate": "string",
-            "SponsorName": "string",
-            "SponsorClassType": "string",
-            "SponsorPhone": "string",
-            "SponsorEmail": "string",
-            "SponsorURLAddress": "string",
-            "SponsorURLText": "string",
-            "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="MemberTours_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "MemberTourID": "int64",
-            "TourID": "int64",
-            "TourName": "string"
-        })
-    elif file_name=="PermitEntranceZones_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "PermitEntranceZoneID": "int64",
-            "PermitEntranceID": "int64",
-            "Zone": "string"
-        })
-    elif file_name=="PermitEntranceAttributes_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "AttributeID": "int64",
-            "AttributeName": "string",
-            "AttributeValue": "string",
-            "EntityID": "string",
-            "EntityType": "string"
-        })
-    elif file_name=="TourAttributes_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "AttributeID": "int64",
-            "AttributeName": "string",
-            "AttributeValue": "string",
-            "EntityID": "string",
-            "EntityType": "string"
-        })
     elif file_name=="RecAreaAddresses_API_v1.csv":
         df = pd.read_csv(url).astype({
             "RecAreaAddressID": "int64",
@@ -281,25 +108,6 @@ def fetch(url: str, year: int, file_name: str) -> pd.DataFrame:
             "AddressStateCode": "string",
             "AddressCountryCode": "string",
             "LastUpdatedDate": "datetime64[ns]"
-        })
-    elif file_name=="RecAreaFacilities_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "RecAreaID": "string",
-            "FacilityID": "string"
-        })
-    elif file_name=="EntityActivities_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "ActivityID": "int64",
-            "ActivityDescription": "string",
-            "ActivityFeeDescription": "string",
-            "EntityID": "string",
-            "EntityType": "string"
-        })
-    elif file_name=="PermittedEquipment_API_v1.csv":
-        df = pd.read_csv(url).astype({
-            "CampsiteID": "int64",
-            "MaxLength": "int64",
-            "EquipmentName": "string"
         })
     else:
         df = pd.read_csv(url)
@@ -327,7 +135,7 @@ def write_local(df: pd.DataFrame, local_path: str) -> Path:
 @task(log_prints=True)
 def write_gcs(path: Path) -> None:
     """Upload local parquet file to GCS"""
-    gcs_block = GcsBucket.load("gcs-decap")
+    gcs_block = GcsBucket.load("gcs-bucket")
     gcs_block.upload_from_path(from_path=path, to_path=path)
     return
 
@@ -361,11 +169,13 @@ if __name__ == "__main__":
         ridbfull = tarfile.open("data/ridb/RIDBFullExport_V1_CSV.gz")
         ridbfull.extractall("data/ridb")
         for name in ridbfull.getnames():
-            if (name == "RIDBFullExport_V1_CSV" or name.startswith("RIDBFullExport_V1_CSV/.") or name.startswith(".")) == False:
+            # Only one of the two if statements below should be active at one time. Ensure one is commented out.
+            # if (name == "RIDBFullExport_V1_CSV" or name.startswith("RIDBFullExport_V1_CSV/.") or name.startswith(".")) == False: # enable this line to process all csv files
+            if (name =="RIDBFullExport_V1_CSV/Facilities_API_v1.csv" or name =="RIDBFullExport_V1_CSV/RecAreas_API_v1.csv" or name =="RIDBFullExport_V1_CSV/RecAreaAddresses_API_v1.csv") == True: #enable this line to process only the required csv files
                 etl_parent_flow(0, name.replace("RIDBFullExport_V1_CSV/",""))
 
-    for year in range(4):
-        year += 2019
+    for year in range(1):
+        year += 2022 # set to 2019 for full reservation data set. 2022 used by default to save time and space for flow demonstration purposes.
         path = ""
         
         # Check whether the specified path exists or not
