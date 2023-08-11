@@ -13,7 +13,7 @@ variable "gcp_auth_file" {
 variable "gcp_project" {
   description = "Your GCP Project ID"
   type = string
-  default = "my-project"
+  default = "my project"
 }
 
 variable "gcp_region" {

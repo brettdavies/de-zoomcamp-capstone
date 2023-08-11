@@ -62,26 +62,4 @@ resource "google_compute_instance" "gcp-ubnt-vm" {
   lifecycle {
     ignore_changes = [attached_disk]
   }
-
-/* File Copy --------------------------------------------------------------------- */
-# provisioner "file" {
-#    # source file name on the local machine where you execute terraform plan and apply
-#    source      = "../compose_files/docker-compose.yaml"
-#    # destination is the file location on the newly created instance
-#    destination = "/home/${var.user}/docker-compose.yaml"
-#    connection {
-#      host        = google_compute_instance.gcp-ubnt-vm.network_interface.0.access_config.0.nat_ip
-#      type        = "ssh"
-#      # username of the instance would vary for each account refer the OS Login in GCP documentation
-#      user        = var.user
-#      timeout     = "500s"
-#      private_key = file(var.privatekeypath)
-#    }
-#    # Commands to be executed as the instance gets ready.
-#    # installing nginx
-#    #inline = [
-#     # "sudo /tmp/startupscript.sh"
-#    #]
-#  }
-
 }
